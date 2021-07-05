@@ -1,0 +1,19 @@
+{
+  "name": "it122",
+  "version": "1.0.0",
+  "description": "applicaton for it 122",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peterTorres7/JavaScript2.git"
+  },
+  "author": "peter torres",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/peterTorres7/JavaScript2/issues"
+  },
+  "homepage": "https://github.com/peterTorres7/JavaScript2#readme"
+}
