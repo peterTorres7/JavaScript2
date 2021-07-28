@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "applicaton for it 122",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
