@@ -1,3 +1,16 @@
-<a href="/">Home</a>
-<h3>Game Details</h3>
-<p>Name is: {{name}} and console is: {{result.console}}</p>
+<html>
+    <body>
+        <a href="/">Home</a>
+        {{#if result}}
+            <h2>{{name}} details: </h2>
+            <li>Console: {{result.console}}</li>
+            <li>Genre: {{result.genre}}</li>
+            <li>Hours: {{result.hours}}</li>
+            <p>
+                <a href="delete?name={{result.name}}">Delete</a>
+            </p>
+        {{else}}
+            <h2>{{name}} not found.</h2>
+        {{/if}}
+    </body>
+</html>
