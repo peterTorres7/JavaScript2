@@ -1,5 +1,9 @@
 <h2>Home</h2>
+<form method="POST" action="/detail">
+    <input type="text" name="name" placeholder="name" required maxlength="100">
+    <button>Search</button>
+</form>
 {{#each games}}
-    <li>Name: {{name}}</li>
+    <li><a href="/detail?name={{name}}">Name: {{name}}</a></li>
 {{/each}}
 
