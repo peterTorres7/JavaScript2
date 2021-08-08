@@ -1,10 +1,8 @@
 "use strict"
 
-// import http from 'http';
 import * as data from './data.js';
-// import { parse } from "querystring";
 import express from 'express';
-import exphbs from 'express-handlebars';
+import handlebars from 'express-handlebars';
 
 const app = express();
 
@@ -13,11 +11,10 @@ app.use(express.static('./public'));
 app.use(express.urlencoded());
 app.use(express.json());
 
-app.engine('handlebars', exphbs({defaultLayout: false})); //'main.handlebars' intead of false
+app.engine('handlebars', handlebars({defaultLayout: "main.handlebars"}));
 app.set('view engine', 'handlebars');
 
 app.get('/', (req,res) => {
-    res.type('text/html');
     res.render('home', { games: data.getAll() });
 });
 

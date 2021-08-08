@@ -1,0 +1,23 @@
+
+body {
+    background-color:lightslategray;
+}
+
+li {
+    color: midnightblue;
+}
+
+li:hover {
+    color: maroon;
+}
+
+button {
+    padding: 10px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+button:hover {
+    background-color: maroon;
+    cursor: crosshair;
+}
