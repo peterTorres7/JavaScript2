@@ -1,0 +1,11 @@
+<html>
+    <body>
+        <a href="/">Home</a>
+        {{#if result.deleted}}
+            <h2>{{name}} was deleted.</h2>
+            Total left is: {{result.total}}
+        {{else}}
+            <h2>{{name}} not found.</h2>
+        {{/if}}
+    </body>
+</html>
