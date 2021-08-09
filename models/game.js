@@ -1,6 +1,5 @@
 'use strict'
 
-import { Int32 } from 'bson';
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 import { connectionString } from "../lib/credentials.js";
@@ -19,7 +18,7 @@ const gameSchema = new Schema({
     name: { type: String, required: true },
     console: String,
     genre: String,
-    hours: int
+    hours: Number
 });
 
 export const Game = mongoose.model('Game', gameSchema);
