@@ -3,6 +3,7 @@
 import * as data from './data.js';
 import express from 'express';
 import handlebars from 'express-handlebars';
+import { Game } from './models/game.js';
 
 const app = express();
 
@@ -14,8 +15,12 @@ app.use(express.json());
 app.engine('handlebars', handlebars({defaultLayout: "main.handlebars"}));
 app.set('view engine', 'handlebars');
 
-app.get('/', (req,res) => {
-    res.render('home', { games: data.getAll() });
+app.get('/', (req,res,next) => {
+    return Game.find({}).lean()
+        .then((games) => {
+            res.render('home', { games });
+        })
+        .catch(err => next(err))
 });
 
 app.get('/about', (req,res) => {
@@ -28,15 +33,25 @@ app.get('/delete', (req,res) => {
     res.render('delete', {name: req.query.name, result: result});
 });
 
-app.get('/detail', (req,res) => {
-    let result = data.getItem(req.query.name);
-    res.render('details', {name: req.query.name, result: result});
+app.get('/detail', (req,res,next) => {
+    Game.findOne({ name:req.query.name }).lean()
+        .then((name) => {
+            res.render('details', {result: name});
+        })
+        .catch(err => next(err));    
 });
 
-app.post('/detail', (req,res) => {
-    console.log(req.body);
-    let found = data.getItem(req.body.name);
-    res.render('details', {name: req.body.name, result: found, games: data.getAll()});
+// app.post('/detail', (req,res) => {
+//     console.log(req.body);
+//     let found = data.getItem(req.body.name);
+//     res.render('details', {name: req.body.name, result: found, games: data.getAll()});
+// });
+app.post('detail', (req,res,next) => {
+    Game.findOne({ name:req.query.name }).lean()
+        .then((name) => {
+            res.render('details', {result: name});
+        })
+        .catch(err => next(err));
 });
 
 app.use((req,res) => {
