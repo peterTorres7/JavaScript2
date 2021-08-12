@@ -36,12 +36,7 @@ app.get('/detail', (req,res,next) => {
         .catch(err => next(err));    
 });
 
-// app.post('/detail', (req,res) => {
-//     console.log(req.body);
-//     let found = data.getItem(req.body.name);
-//     res.render('details', {name: req.body.name, result: found, games: data.getAll()});
-// });
-app.post('detail', (req,res,next) => {
+app.post('/detail', (req,res,next) => {
     Game.findOne({ name:req.body.name }).lean()
         .then((name) => {
             res.render('details', {result: name});
