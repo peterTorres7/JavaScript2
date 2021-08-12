@@ -16,7 +16,7 @@ app.engine('handlebars', handlebars({defaultLayout: "main.handlebars"}));
 app.set('view engine', 'handlebars');
 
 app.get('/', (req,res,next) => {
-    return Game.find({}).lean()
+    Game.find({}).lean()
         .then((games) => {
             res.render('home', { games });
         })
@@ -27,11 +27,6 @@ app.get('/about', (req,res) => {
     res.type('text/plain');
     res.send('I like anime');
 })
-
-app.get('/delete', (req,res) => {
-    let result = data.deleteItem(req.query.name);
-    res.render('delete', {name: req.query.name, result: result});
-});
 
 app.get('/detail', (req,res,next) => {
     Game.findOne({ name:req.query.name }).lean()
@@ -47,11 +42,22 @@ app.get('/detail', (req,res,next) => {
 //     res.render('details', {name: req.body.name, result: found, games: data.getAll()});
 // });
 app.post('detail', (req,res,next) => {
-    Game.findOne({ name:req.query.name }).lean()
+    Game.findOne({ name:req.body.name }).lean()
         .then((name) => {
             res.render('details', {result: name});
         })
         .catch(err => next(err));
+});
+
+app.get('/delete', (req,res,next) => {
+    Game.deleteOne({ name:req.query.name }, (err, result) => {
+        if (err) return next(err);
+        let deleted = result.n !== 0;
+        Game.countDocuments((err, total) => {
+            res.type('text/html');
+            res.render('delete', {name: req.query.name, deleted: result.n !== 0, total: total });
+        });
+    });
 });
 
 app.use((req,res) => {
