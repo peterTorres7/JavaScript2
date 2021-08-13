@@ -38,8 +38,8 @@ app.get('/detail', (req,res,next) => {
 
 app.post('/detail', (req,res,next) => {
     Game.findOne({ name:req.body.name }).lean()
-        .then((name) => {
-            res.render('details', {result: name});
+        .then((game) => {
+            res.render('details', {result: game, name:req.body.name});
         })
         .catch(err => next(err));
 });

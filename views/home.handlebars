@@ -1,9 +1,15 @@
 <h2>Game Home</h2>
+
 <form method="POST" action="/detail">
     <input type="text" name="name" placeholder="name" required maxlength="100">
     <button>Search</button>
 </form>
+
 {{#each games}}
     <li><a href="/detail?name={{name}}">Name: {{name}}</a></li>
 {{/each}}
 
+<form method="GET" action="/delete">
+    <input type="text" name="name" placeholder="name" required maxlength="100">
+    <button>Delete</button>
+</form>
