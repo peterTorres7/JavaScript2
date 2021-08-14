@@ -59,27 +59,56 @@ app.get('/delete', (req,res,next) => {
 
 // api's
 app.get('/api/v1/games', (req,res,next) => {
-    Game.find((err, games) => {
-        if (err) return next(err);
-        if (games) {
-            res.json(games);
-        } else {
-            res.status(400).send({ err: "There are no games" });
-        };
+    Game.find((err, results) => {
+        if (err || !results) { 
+            res.status(404).json({ "Error": "Games not found" });
+        } else { 
+            res.json(results);
+        }
     });
 });
 
 app.get('/api/v1/games/:name', (req,res,next) => {
     let name = req.params.name;
-    Game.findOne({name: name}, (err, game) => {
-        if (err) return next(err);
-        if (game) {
-            res.json(game)
+    Game.findOne({name: name}, (err, result) => {
+        if (err || !result) {
+            res.status(404).json({ "Error": "Game not found" });
         } else {
-            res.status(400).sendStatus({ err: "There is no game" });
-        };
+            res.json(result)
+        }
     });
 });
+
+app.get('/api/v1/delete/:id', (req,res,next) => {
+    Game.deleteOne({"_id":req.params.id}, (err, result) => {
+        if (err || !result) {
+            res.status(404).json({ "Error": "Game not deleted" });
+        } else {
+            res.json({ "deleted": result });
+        }
+    });
+});
+
+app.post('/api/v1/add/', (req,res,next) => {
+    if (!req.body._id) {
+        let game = new Game(req.body);
+        game.save((err, newGame) => {
+            if (err || !result) {
+                res.status(404).json({ "Error": "Game not added"})
+            } else {
+                res.json({updated: 0, _id: newGame._id});
+            }
+        });
+    } else {
+        Game.updateOne({ _id: req.body._id}, {name: req.body.name, console: req.body.console, genre: req.body.genre, hours: req.body.hours}, (err, result) => {
+             if (err || !result) {
+            res.status(404).json({ "Error": "Game not updated" });
+            } else {
+            res.json({ updated: result.nModified, _id: req.body._id });
+            }       
+        });
+    }
+});   
 
 
 app.use((req,res) => {
