@@ -70,6 +70,7 @@ app.get('/api/v1/games', (req,res,next) => {
 
 app.get('/api/v1/games/:name', (req,res,next) => {
     let name = req.params.name;
+    console.log(name);
     Game.findOne({name: name}, (err, result) => {
         if (err || !result) {
             res.status(404).json({ "Error": "Game not found" });
@@ -84,32 +85,44 @@ app.get('/api/v1/delete/:id', (req,res,next) => {
         if (err || !result) {
             res.status(404).json({ "Error": "Game not deleted" });
         } else {
+            console.log(result);
             res.json({ "deleted": result });
         }
     });
 });
 
 app.post('/api/v1/add/', (req,res,next) => {
+    console.log(req.body);
     if (!req.body._id) {
-        let game = new Game(req.body);
+        let game = new Game({name: req.body.name, console: req.body.console, genre: req.body.genre, hours: req.body.hours});
         game.save((err, newGame) => {
-            if (err || !result) {
-                res.status(404).json({ "Error": "Game not added"})
+            if (err) {
+                res.status(404).json({ "Error": "Game not added" });
             } else {
-                res.json({updated: 0, _id: newGame._id});
+                res.json({ updated: 0, _id: newGame._id, message: "Game added" });
             }
         });
     } else {
         Game.updateOne({ _id: req.body._id}, {name: req.body.name, console: req.body.console, genre: req.body.genre, hours: req.body.hours}, (err, result) => {
-             if (err || !result) {
-            res.status(404).json({ "Error": "Game not updated" });
+            if (err || !result) {
+                res.status(404).json({ "Error": "Game not updated" });
             } else {
-            res.json({ updated: result.nModified, _id: req.body._id });
-            }       
+                res.json({ updated: result.nModified, _id: req.body._id, message: "Gamed updated" });
+            }
         });
     }
 });   
 
+app.get('/api/v1/add/:name/:console/:genre/:hours', (req,res,next) => {
+    let name = req.params.name;
+    Game.updateOne({ name: name}, {name: name, console: req.params.console, genre: req.params.genre, hours: req.params.hours}, {upsert: true}, (err, result) => {
+        if (err) {
+            res.status(404).json({ "Error": "Game not updated"});
+        } else {
+            res.json({updated: result.nModified, message: "Successful entry"});
+        }
+    });
+});
 
 app.use((req,res) => {
     res.type('text/plain');
