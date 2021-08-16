@@ -5,11 +5,46 @@
     <button>Search</button>
 </form>
 
-{{#each games}}
-    <li><a href="/detail?name={{name}}">Name: {{name}}</a></li>
-{{/each}}
-
 <form method="GET" action="/delete">
     <input type="text" name="name" placeholder="name" required maxlength="100">
     <button>Delete</button>
 </form>
+
+<h2>Games</h2>
+
+<div id="root"></div>
+<script type="text/babel">
+
+    const games = {{{games}}}
+    console.log(games)
+
+    const showDetail = (event) => {
+        console.log(event.target)
+        console.log(event.target.innerText)
+        console.log(event.target.id)
+        window.location.href = "/detail?name" + event.target.innerText
+    }
+
+    const Games = (props) => {
+        console.log(props)
+        const listGames = props.data.map((game) => 
+            <li key={game._id} id={game._id} onClick={props.clickHandler}>
+                {game.name}
+            </li>);
+            return <ul>{listGames}</ul>
+    };
+
+
+
+    ReactDOM.render(
+        <div><Games data={games} clickHandler={showDetail} /></div>,
+        document.getElementById('root')
+    );
+
+
+</script>
+
+{{!-- {{#each games}}
+    <li><a href="/detail?name={{name}}">Name: {{name}}</a></li>
+{{/each}} --}}
+

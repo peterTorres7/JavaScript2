@@ -33,16 +33,35 @@
       return <div><h2>Show components here!</h2></div>;
     }
 
+    const showDetail = (event) => {
+        // <a href={"/detail?name=" + game.name}>
+        console.log(event.target);
+        console.log(event.target.innerText);
+        console.log(event.target.id);
+        window.location.href = "/detail?name=" + event.target.innerText;
+    }
+
     const names = ["peter", "daniel", "ron"];
-    const listNames = names.map((name) => <li key={name}>{name}</li>);
+    const listNames = names.map((name) => <li onClick={showDetail} key={name}>{name}</li>);
 
     const divStyle = {
         color: 'maroon'
     };
 
+
+
+    const Detail = (props) => {
+        return <div>
+            <hr/>
+            <h2>{props.name}</h2>
+            Some details about {props.name}.
+        </div>
+    }
+
     const myApp = <div style={divStyle}>
             <Greeting user="Peter" />
             <ul>{listNames}</ul>
+            <Detail name="gary" />
     </div>
 
 
