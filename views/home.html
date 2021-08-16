@@ -15,61 +15,60 @@
 <div id="root"></div>
 <script type="text/babel">
 
-    // const items = {{{ items }}}
-    // console.log(items)
-
-    // define other components
-
-
     const Greeting = (props) => {
-        console.log(props);
         if (props.user) {
             return <h1>Hello, {props.user}!</h1>;
         }
         return <h1>Hello, Stranger.</h1>;
     }
 
-    const App = () => {
-      return <div><h2>Show components here!</h2></div>;
+    const items = [
+        {"name": "peter", "country": "France"},
+        {"name": "daniel", "country": "Mexico"},
+        {"name": "ron", "country": "Romania"}
+    ];
+
+    const Users = (props) => {
+        const listItems = props.items.map((item) => <li key={item.name} onClick={props.clickHandler}>
+        {item.name}
+        </li>);
+        return <ul>{listItems}</ul>
     }
-
-    const showDetail = (event) => {
-        // <a href={"/detail?name=" + game.name}>
-        console.log(event.target);
-        console.log(event.target.innerText);
-        console.log(event.target.id);
-        window.location.href = "/detail?name=" + event.target.innerText;
-    }
-
-    const names = ["peter", "daniel", "ron"];
-    const listNames = names.map((name) => <li onClick={showDetail} key={name}>{name}</li>);
-
     const divStyle = {
         color: 'maroon'
     };
 
-
-
     const Detail = (props) => {
-        return <div>
-            <hr/>
-            <h2>{props.name}</h2>
-            Some details about {props.name}.
-        </div>
+        return <div>{props.item.name} lives in {props.item.country} </div>
     }
 
-    const myApp = <div style={divStyle}>
-            <Greeting user="Peter" />
-            <ul>{listNames}</ul>
-            <Detail name="gary" />
-    </div>
+    class App extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {current_item: {}};
+        }
 
+        showDetail = (event) => {
+        // <a href={"/detail?name=" + game.name}>
+        console.log(event.target);
+        console.log(event.target.innerText);
+        const item = items.find((item) => item.name == event.target.innerText)
+        console.log(item)
+        this.setState({"current_item": item})
+    }
 
-
-    ReactDOM.render(
-        myApp,
-        document.getElementById('root')
-    );
+        render() {
+            return ( 
+                <div> 
+                    <h1>Hello, world!</h1>
+                    <Users items={items} clickHandler={this.showDetail} />
+                    <hr />
+                    <Detail item={this.state.current_item} />
+                </div>
+            );
+        }
+    }
+    ReactDOM.render( <App />, document.getElementById('root') );
 
 </script>
 </body>
