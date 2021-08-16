@@ -20,11 +20,38 @@
 
     // define other components
 
+
+    const Greeting = (props) => {
+        console.log(props);
+        if (props.user) {
+            return <h1>Hello, {props.user}!</h1>;
+        }
+        return <h1>Hello, Stranger.</h1>;
+    }
+
     const App = () => {
       return <div><h2>Show components here!</h2></div>;
     }
 
-    ReactDOM.render(<App />, document.getElementById('root'));
+    const names = ["peter", "daniel", "ron"];
+    const listNames = names.map((name) => <li key={name}>{name}</li>);
+
+    const divStyle = {
+        color: 'maroon'
+    };
+
+    const myApp = <div style={divStyle}>
+            <Greeting user="Peter" />
+            <ul>{listNames}</ul>
+    </div>
+
+
+
+    ReactDOM.render(
+        myApp,
+        document.getElementById('root')
+    );
+
 </script>
 </body>
 </html>
