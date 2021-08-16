@@ -1,4 +1,4 @@
-<h2>Game Home</h2>
+<h1>Game Home</h1>
 
 <form method="POST" action="/detail">
     <input type="text" name="name" placeholder="name" required maxlength="100">
@@ -22,7 +22,7 @@
         console.log(event.target)
         console.log(event.target.innerText)
         console.log(event.target.id)
-        window.location.href = "/detail?name" + event.target.innerText
+        window.location.href = "/detail?name=" + event.target.innerText
     }
 
     const Games = (props) => {
@@ -30,21 +30,14 @@
         const listGames = props.data.map((game) => 
             <li key={game._id} id={game._id} onClick={props.clickHandler}>
                 {game.name}
-            </li>);
-            return <ul>{listGames}</ul>
+            </li>
+        );
+        return <ul>{listGames}</ul>
     };
-
-
 
     ReactDOM.render(
         <div><Games data={games} clickHandler={showDetail} /></div>,
         document.getElementById('root')
     );
 
-
 </script>
-
-{{!-- {{#each games}}
-    <li><a href="/detail?name={{name}}">Name: {{name}}</a></li>
-{{/each}} --}}
-

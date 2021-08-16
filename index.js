@@ -94,7 +94,7 @@ app.get('/api/v1/delete/:id', (req,res,next) => {
 app.post('/api/v1/add/', (req,res,next) => {
     console.log(req.body);
     if (!req.body._id) {
-        let game = new Game({name: req.body.name, console: req.body.console, genre: req.body.genre, hours: req.body.hours});
+        let game = new Game(req.body);
         game.save((err, newGame) => {
             if (err) {
                 res.status(404).json({ "Error": "Game not added" });
