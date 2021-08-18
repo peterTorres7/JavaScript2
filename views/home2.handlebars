@@ -22,14 +22,10 @@
         return <h1>Hello, Stranger.</h1>;
     }
 
-    const items = [
-        {"name": "peter", "country": "France"},
-        {"name": "daniel", "country": "Mexico"},
-        {"name": "ron", "country": "Romania"}
-    ];
+    const items = {{{items}}};
 
     const Users = (props) => {
-        const listItems = props.items.map((item) => <li key={item.name} onClick={props.clickHandler}>
+        const listItems = props.items.map((item) => <li key={item._id} onClick={props.clickHandler}>
         {item.name}
         </li>);
         return <ul>{listItems}</ul>
@@ -39,7 +35,12 @@
     };
 
     const Detail = (props) => {
-        return <div>{props.item.name} lives in {props.item.country} </div>
+        return <div>
+            <h3>Game details</h3>
+            {props.item.name} plays on {props.item.console} and 
+            is part of the {props.item.genre} genre with over {props.item.hours} hours
+            of playing time!
+            </div>
     }
 
     class App extends React.Component {

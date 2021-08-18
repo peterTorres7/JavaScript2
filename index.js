@@ -20,7 +20,7 @@ app.set('view engine', 'handlebars');
 app.get('/', (req,res) => {
     Game.find({}).lean()
         .then((games) => {
-            res.render('home', { games: JSON.stringify(games) });
+            res.render('home2', { items: JSON.stringify(games) });
         })
         .catch(err => next(err));
 });
