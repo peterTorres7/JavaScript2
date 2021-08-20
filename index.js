@@ -107,7 +107,7 @@ app.post('/api/v1/add/', (req,res,next) => {
             if (err || !result) {
                 res.status(404).json({ "Error": "Game not updated" });
             } else {
-                res.json({ updated: result.nModified, _id: req.body._id, message: "Gamed updated" });
+                res.json({ updated: result.nModified, _id: req.body._id, message: "Game updated" });
             }
         });
     }

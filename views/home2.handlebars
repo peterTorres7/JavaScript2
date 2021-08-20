@@ -55,7 +55,6 @@
         onChange = (e) => {
             const new_item = this.state.current_item;
             new_item[e.target.name] = e.target.value;
-            console.log(new_item)
             this.setState({"current_item": new_item})
         }
 
@@ -64,12 +63,20 @@
         }
 
         onSave = () => {
-            console.log('save');
+            let game = this.state.current_item; 
+            fetch("/api/v1/add/", {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(game)
+            })
+                .then(res => res.json())
+                .then((json) => { console.log(json) });
         }
+
         render() {
             return ( 
                 <div> 
-                    <h1>Games</h1>
+                    <h1>Video Games</h1>
                     <Users items={items} clickHandler={this.showDetail} />
                     <hr />
                     <Detail item={this.state.current_item} onChange={this.onChange} onClear={this.onClear} onSave={this.onSave} />
