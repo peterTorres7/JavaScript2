@@ -9,3 +9,7 @@
 * [Features](#features)
 * [Status](#status)
 * [Inspiration](#inspiration)
+
+## General info
+🖥️
+
