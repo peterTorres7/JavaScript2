@@ -11,5 +11,6 @@
 * [Inspiration](#inspiration)
 
 ## General info
-🖥️
+🖥
 
+This full-stack web application lets user store, view, and manage a video game catalog.
